@@ -1,0 +1,46 @@
+body{
+    background-color: #333;
+    font-family: sans-serif;
+}
+
+#cabecalho-principal{
+    text-align: center;
+    padding: 20px;
+}
+
+.post{
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 25px;
+    margin: 20px;
+}
+
+h1, h2{
+    color:navy;
+}
+
+nav a{
+    text-decoration: none;
+    color: crimson;
+    font-weight: bold;
+}
+
+footer{
+    font-size: 14px;
+}
+
+button{
+    background-color: navy;
+    color: white;
+    padding: 10px;
+    border: none;
+}
+
+button:hover{
+    background-color:olivedrab;
+}
+
+/* figure img{
+    width: 1000px;
+    height: 100px;
+} */

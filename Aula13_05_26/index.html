@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <header id="cabecalho-principal">
+        <h1 class="fixo" id="titulo-principal">Meu Blog de Tecnologia</h1>
+        <nav>
+            <ul>
+                <li> <a href="#">Home</a></li>
+                <li> <a href="#">Sobre</a></li>
+                <li> <a href="#">Contato</a></li>
+            </ul>
+        </nav>
+        <button id="change-title-btn">Mudar Titulo</button> 
+    </header>
+
+    <main>
+        <article class="post">
+            <h2>O que é HTML Semântico? E por que você deveria se importar?</h2>
+            <p>HTML Semântico é a prática de usar tags HTML que <strong>reforçam o significado</strong> da informação contida nelas, em vez de apenas definir sua aparência.</p>
+            
+            <h3>Os 3 Pilares da Semântica</h3>
+            <p>A importância pode ser resumida em três áreas principais:</p>
+            <ul>
+                <li>Acessibilidade</li>
+                <li>SEO (Otimização para Mecanismos de Busca)</li>
+                <li>Manutenção e Clareza do Código</li>
+            </ul>
+
+            <figure>
+                <img src="https://danieldigital.com.br/wp-content/uploads/2019/06/html5-tags-semanticas-estrutura-site-seo.jpg" alt="Diagrama mostrando a estrutura de um site">
+                <figcaption>Figura 1: Estrutura semântica de uma página moderna.</figcaption>
+            </figure>
+            <button id="change-post-btn">Mudar</button>
+        </article>
+        <aside class="sidebar">
+            <h3>Posts Recentes</h3>
+            <ul>
+                <li><a href="#">Entendendo JavaScript</a></li>
+                <li><a href="#">O que é React?</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>© 2025 - Thiago</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
