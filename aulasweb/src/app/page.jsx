@@ -1,7 +1,8 @@
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "./page.module.css";
-import PostCard from "../components/PostCard";
+// import PostCard from "../components/PostCard";
 import Sidebar from "../components/Sidebar";
+import CommentSection from "../components/CommentSection"
 
 const posts = [
   {id: 1, titulo:"Titulo 1", texto: "Texto 1"},
@@ -10,16 +11,15 @@ const posts = [
 
 export default function Home() {
   return (
-    <div>
-      <main>
-      {posts.map((post)=>(
-        <PostCard key={post.id} titulo={post.titulo} texto={post.texto}/>
-      ))
-      }
+    <div className={styles. container}>
+      <main className={styles.mainContent}>
+        <h1>O Poder dos Componentes no Next.js</h1>
+        <p>Este é o corpo principal do nosso artigo. Aqui discutimos como a arquit</p>
+        <p>Cada parte da nossa página, como o cabeçalho, rodapé, barra lateral e a</p>
+
+        <CommentSection />
       </main>
       <Sidebar />
     </div>
-    
-
   );
 }
