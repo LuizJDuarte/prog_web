@@ -1,0 +1,30 @@
+.sidebar{
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.sidebar h3{
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #343a40;
+    border-bottom: 2px solid #0070f3;
+    padding-bottom: 0.5rem;
+}
+
+.sidebar li{
+    margin-bottom: 0.75rem;
+}
+
+.sidebar a{
+    color:#0070f3;
+    text-decoration: none;
+    font-weight: 500;
+    transition:all 0.2s ease-in-out;
+}
+
+.sidebar a:hover{
+    text-decoration: underline;
+    color: #0056b3;
+}
