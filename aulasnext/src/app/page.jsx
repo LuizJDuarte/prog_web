@@ -10,6 +10,30 @@ const posts = [
   {id: 2, titulo:"Titulo 2", texto: "Texto 2"}
 ]
 
+// Exemplo APIs 
+// async function buscarDados(){
+//   const resposta = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+//   const dados = await resposta.json();
+//   console.log(dados);
+// }
+
+async function buscarDadosSeguranca(){
+  try{
+    const resposta = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    if(!resposta.ok) {
+      throw new Error("Erro: "+ resposta.status);
+    }
+    const dados = await resposta.json();
+    console.log(dados);
+  } catch (error){
+    console.error("Algo deu errado!" + error);
+  }
+}
+
+// const [ valor , setValor] = useState(valorInicial);
+// valor = estado ; setValor = função que vai mudar aquele estado 
+
+
 export default function Home() {
   return (
     <div className={styles. container}>
