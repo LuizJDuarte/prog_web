@@ -1,27 +1,41 @@
 'use client';
 
 import styles from './CommentSection.module.css';
-import { useState } from 'react';
-
-// Dados fictícios de comentários
-const mockComentarios = [
-{ id: 101, autor: "Maria", texto: "Ótimo post! Muito bem explicado." },
-{ id: 102, autor: "João", texto: "Tinha dúvidas sobre isso, agora entendi tudo. Obrigado!" },
-{ id: 103, autor: "Ana", texto: "Concordo plenamente. 0 Next. js facilita muito a vida." }
-];
-
+import { useState , useEffect } from 'react';
 
 export default function CommentSection(){
-    const [comments, setComments] = useState(mockComentarios);
+    const [comments, setComments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null); 
 
     const [newCommentText, setNewCommentText] = useState('');
 
-    function handleSubmit(event){
+    useEffect(()=>{
+        // A função que busca os dados
+        async function fetchComments(){
+            try{
+                const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=5");
+                if(!response.ok){
+                    throw new Error("Falha ao buscar os comentários.");
+                }
+                const data = await response.json();
+                setComments(data); // Sucesso! Guarda os dados no estado
+            } catch(err){
+                setError(err.message); // Erro! Guarda a mensagem de erro no estado
+            } finally {
+                setLoading(false); // Terminou, seja com sucesso ou erro 
+            }
+        }   
+
+        fetchComments(); // Chama a função que acabamos de criar
+    }, []); // [] = roda apenas uma vez!
+
+    function handleSubmit(event){   
         event.preventDefault();
         const newCommentObject = {
             id: new Date().getTime(),
-            autor: "Visitante",
-            texto: newCommentText
+            name: "Visitante",
+            body: newCommentText
         };
         setComments([...comments, newCommentObject]);
         setNewCommentText('');
@@ -40,10 +54,13 @@ export default function CommentSection(){
 
             {/* Lista de comentários existentes */}
             <div className={styles.commentList}>
-                {comments.map((comentario)=>(
-                    <div key={comentario. id} className={styles. comment}>
-                        <p className={styles.commentAuthor}>{comentario.autor} diz:</p>
-                        <p className={styles.commentText}>{comentario.texto}</p>
+                {loading && <p>Carregando comentários...</p>}
+                {error && <p style={{ color: 'red' }}>Erro: {error}</p>}
+                {!loading && !error && comments.map((comentario)=>(
+                    <div key={comentario.id} className={styles.comment}>
+                        {/* JSONPlaceholder usa 'email' como autor e 'body' como texto */}
+                        <p className={styles.commentAuthor}>{comentario.name} diz:</p>
+                        <p className={styles.commentText}>{comentario.body}</p>
                     </div>
                 ))}
             </div>

@@ -37,7 +37,7 @@ async function buscarDadosSeguranca(){
 export default function Home() {
   return (
     <div className={styles. container}>
-      <Counter />
+      {/* <Counter /> */}
       <main className={styles.mainContent}>
         <h1>O Poder dos Componentes no Next.js</h1>
         <p>Este é o corpo principal do nosso artigo. Aqui discutimos como a arquit</p>
