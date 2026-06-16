@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a{
+    text-decoration: none;
+}
+
+main{
+    display: flex;
+    gap: 20px;
+}
+
+.main{
+    flex: 3;
+}
+
+aside{
+    flex: 1;
+}
+
+img{
+    width: 200px;
+}
