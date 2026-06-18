@@ -1,9 +1,11 @@
 import {NextResponse} from 'next/server';
-import {obterTodosPosts} from '../../controllers/postsController'
+import { obterPostsPublicados } from '@/controllers/postController' ;
+
+const mockPosts = [{id:1, titulo: "A"},{id:2, titulo: "B"}];
 
 export async function GET(){
     // Nossos dados simulados (No futuro, virão do Banco de dados)
-    // const posts = [{id: 1, titulo:"Titulo 1", texto: "Texto 1"},{id: 2, titulo:"Titulo 2", texto: "Texto 2"}];
-
-    return NextResponse.json(obterTodosPosts, {status:200});
+    
+    const posts = obterPostsPublicados();
+    return NextResponse.json(postsFiltrados);
 }

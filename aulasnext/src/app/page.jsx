@@ -65,8 +65,6 @@ export default function Home() {
         <p>Este é o corpo principal do nosso artigo. Aqui discutimos como a arquit</p>
         <p>Cada parte da nossa página, como o cabeçalho, rodapé, barra lateral e a</p>
 
-        <PostCard />
-
         <CommentSection />
       </main>
       <Sidebar />
