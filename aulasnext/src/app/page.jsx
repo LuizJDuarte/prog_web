@@ -7,11 +7,6 @@ import CommentSection from "../components/CommentSection"
 import Counter from "../components/Counter"
 import {useState , useEffect} from 'react';
 
-const posts = [
-  {id: 1, titulo:"Titulo 1", texto: "Texto 1"},
-  {id: 2, titulo:"Titulo 2", texto: "Texto 2"}
-]
-
 // Exemplo APIs 
 // async function buscarDados(){
 //   const resposta = await fetch("https://jsonplaceholder.typicode.com/posts/1");
@@ -19,22 +14,19 @@ const posts = [
 //   console.log(dados);
 // }
 
-async function buscarDadosSeguranca(){
-  try{
-    const resposta = await fetch("https://jsonplaceholder.typicode.com/posts/1");
-    if(!resposta.ok) {
-      throw new Error("Erro: "+ resposta.status);
-    }
-    const dados = await resposta.json();
-    console.log(dados);
-  } catch (error){
-    console.error("Algo deu errado!" + error);
-  }
-}
-
-// const [ valor , setValor] = useState(valorInicial);
-// valor = estado ; setValor = função que vai mudar aquele estado 
-
+// Exemplo buscar dados com segurança
+// async function buscarDadosSeguranca(){
+//   try{
+//     const resposta = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+//     if(!resposta.ok) {
+//       throw new Error("Erro: "+ resposta.status);
+//     }
+//     const dados = await resposta.json();
+//     console.log(dados);
+//   } catch (error){
+//     console.error("Algo deu errado!" + error);
+//   }
+// }
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -64,7 +56,14 @@ export default function Home() {
         <h1>O Poder dos Componentes no Next.js</h1>
         <p>Este é o corpo principal do nosso artigo. Aqui discutimos como a arquit</p>
         <p>Cada parte da nossa página, como o cabeçalho, rodapé, barra lateral e a</p>
-
+        {
+          posts.map( post => (
+            <PostCard key={post.id}
+                      titulo={post.titulo}
+                      texto={post.texto}
+            />
+          ))
+        }
         <CommentSection />
       </main>
       <Sidebar />

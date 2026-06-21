@@ -1,13 +1,12 @@
-import {PostModel} from '@/models/postModel';
+import { PostModel } from "@/models/postsModel";
 
-export const obterPostsPublicados = () =>{
-    const todosOsPosts = PostModel.buscarTodos();
-
-    const apenasPublicados = todosOsPosts.filter((post)=> post.status==="publicado");
-    return apenasPublicados;
+export function obterPostsPublicados() {
+    const todosPosts = PostModel.buscarTodosPosts();
+    const postsPublicados = todosPosts.filter((p)=> p.status == "publicado");
+    return postsPublicados;
 }
 
-export function obterTodosPosts(){
-    const todosPosts = PostModel.buscarTodos();
+export function obterTodosPosts() {
+    const todosPosts = PostModel.buscarTodosPosts();
     return todosPosts;
 }

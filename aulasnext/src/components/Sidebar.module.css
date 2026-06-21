@@ -13,6 +13,12 @@
     padding-bottom: 0.5rem;
 }
 
+.sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 .sidebar li{
     margin-bottom: 0.75rem;
 }

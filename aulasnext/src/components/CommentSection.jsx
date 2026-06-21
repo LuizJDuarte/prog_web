@@ -14,7 +14,7 @@ export default function CommentSection(){
         // A função que busca os dados
         async function fetchComments(){
             try{
-                const response = await fetch("https://jsonplaceholder.typicode.com/comments?_limit=5");
+                const response = await fetch("/api/comments");
                 if(!response.ok){
                     throw new Error("Falha ao buscar os comentários.");
                 }
@@ -30,7 +30,7 @@ export default function CommentSection(){
         fetchComments(); // Chama a função que acabamos de criar
     }, []); // [] = roda apenas uma vez!
 
-    function handleSubmit(event){   
+    function adicionarComentario(event){   
         event.preventDefault();
         const newCommentObject = {
             id: new Date().getTime(),
@@ -46,7 +46,7 @@ export default function CommentSection(){
             <h2>Comentários</h2>
 
             {/* Formulário para adicionar um novo comentário */}
-            <form className={styles.commentForm} onSubmit={handleSubmit}>
+            <form className={styles.commentForm} onSubmit={adicionarComentario}>
                 <label htmlFor="comment">Deixe seu comentário :</label>
                 <textarea id="comment" name="comment" rows="4" required value={newCommentText} onChange={(event)=>setNewCommentText(event.target.value)}></textarea>
                 <button type="submit">Enviar Comentário</button>
