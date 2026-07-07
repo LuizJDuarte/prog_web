@@ -35,7 +35,19 @@ export default function Home() {
 
     async function buscarDadosPosts(){
       try{
-        const resposta = await fetch("/api/posts");
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+
+          const resposta = await fetch('/api/posts',{
+            method: 'POST',
+            headers: { 'Content-Type':'application/json'},
+            body: JSON.stringify({titulo}),
+          });
+
+          const result = await resposta.json();
+          alert(result.message);
+        };
+        
         if(!resposta.ok){
           throw new Error("Não foi possível acessar os dados de posts");
         }
