@@ -1,0 +1,40 @@
+// Schema do Prisma para o projeto aulasnext
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nome      String
+  createdAt DateTime @default(now())
+  posts     Post[]
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  titulo    String
+  texto     String
+  status    String    @default("publicado") // "publicado" ou "arquivado"
+  createdAt DateTime  @default(now())
+  autorId   Int
+  autor     User      @relation(fields: [autorId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+}
+
+model Comment {
+  id     Int    @id @default(autoincrement())
+  name   String
+  body   String
+  status String @default("publicado")
+  postId Int
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+}

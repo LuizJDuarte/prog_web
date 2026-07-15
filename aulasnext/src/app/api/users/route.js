@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { obterTodosComentarios, criarComentario } from "@/controllers/commentController";
+import { listarUsuarios, criarUsuario } from "@/controllers/userController";
 
 export async function GET() {
     try {
-        const dados = await obterTodosComentarios();
-        return NextResponse.json(dados, { status: 200 });
+        const users = await listarUsuarios();
+        return NextResponse.json(users, { status: 200 });
     } catch (err) {
         return NextResponse.json({ erro: err.message }, { status: 500 });
     }
@@ -13,8 +13,8 @@ export async function GET() {
 export async function POST(request) {
     try {
         const corpo = await request.json();
-        const comentario = await criarComentario(corpo);
-        return NextResponse.json(comentario, { status: 201 });
+        const user = await criarUsuario(corpo);
+        return NextResponse.json(user, { status: 201 });
     } catch (err) {
         return NextResponse.json({ erro: err.message }, { status: 400 });
     }

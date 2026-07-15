@@ -1,27 +1,45 @@
-const mockPosts = [{id: 1, titulo: "Titulo 1", texto: "Texto 1", status: "publicado"},
-               {id: 2, titulo: "Titulo 2", texto: "Texto 2", status: "arquivado"}
-    ];
+import prisma from '@/lib/db';
 
 export const PostModel = {
-    buscarTodosPosts : () => mockPosts,
+    buscarTodosPosts: async () => {
+        return await prisma.post.findMany({
+            orderBy: { id: 'asc' },
+            include: {
+                autor: { select: { id: true, nome: true, email: true } },
+            },
+        });
+    },
 
-    criar: (novoPost)=> {
-        const proximoId = posts.length > 0
-        ?
-        Math.max(...posts.map(post => post.id)) + 1
-        :
-        1;
+    buscarPorId: async (id) => {
+        return await prisma.post.findUnique({
+            where: { id: Number(id) },
+            include: {
+                autor: { select: { id: true, nome: true, email: true } },
+                comments: true,
+            },
+        });
+    },
 
-        // 2. Monta o objeto final 
-        const postComId = {id: proximoId, ...novoPost};
+    criar: async (novoPost) => {
+        return await prisma.post.create({
+            data: {
+                titulo: novoPost.titulo,
+                texto: novoPost.texto ?? '',
+                status: novoPost.status ?? 'publicado',
+                autorId: Number(novoPost.autorId),
+            },
+        });
+    },
 
-        // 3. Salva no "banco" e retorna 
-        posts.push(postComId);
-        return postComId;
-    } ,
-
-    buscaPorId: (idBusca) => posts.find(p=>p.id === Number(idBusca)),
-    deletar: (idDeletar) => {
-        posts = posts.filter(p => p.id !== Number(idDeletar));
-    } 
+    deletar: async (id) => {
+        try {
+            await prisma.post.delete({
+                where: { id: Number(id) },
+            });
+            return true;
+        } catch (err) {
+            if (err.code === 'P2025') return false;
+            throw err;
+        }
+    },
 };

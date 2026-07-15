@@ -1,40 +1,38 @@
 import { TarefaModel } from '@/models/tarefaModel';
 
-// Verifique se o titulo e valido. Se for, chame TarefaModel.criar
-export const adicionarTarefa = (titulo) => {
-    if(titulo.trim() === ''){
+// Todas as funcoes agora sao async porque o Model conversa com o banco
+
+export const adicionarTarefa = async (titulo) => {
+    if (!titulo || titulo.trim() === '') {
         throw new Error('Título inválido');
     }
-    const criarTarefa = TarefaModel.criar(titulo);
-    return criarTarefa;
+    return await TarefaModel.criar(titulo);
 };
 
-// Verifique se a tarefa existe. Se existir, atualize.
-export const atualizarStatus = (id, concluida) => {
-    const tarefaAtualizada = TarefaModel.atualizar(id,concluida);
-    if (!tarefaAtualizada){
+export const atualizarStatus = async (id, concluida) => {
+    const tarefaAtualizada = await TarefaModel.atualizar(id, concluida);
+    if (!tarefaAtualizada) {
         throw new Error('Tarefa não encontrada');
     }
-    return tarefaAtualizada; 
+    return tarefaAtualizada;
 };
 
-// Implemente listarTarefas, buscarTarefa e removerTaref
-export const listarTarefas = () => {
-    return TarefaModel.buscarTodas();
-}
+export const listarTarefas = async () => {
+    return await TarefaModel.buscarTodas();
+};
 
-export const buscarTarefa = (id) => {
-    const tarefa = TarefaModel.buscarPorId(id);
+export const buscarTarefa = async (id) => {
+    const tarefa = await TarefaModel.buscarPorId(id);
     if (!tarefa) {
         throw new Error('Tarefa não encontrada');
     }
     return tarefa;
 };
 
-export const removerTarefa = (id) => {
-    const tarefaRemovida = TarefaModel.deletar(id);
-    if(!tarefaRemovida){
+export const removerTarefa = async (id) => {
+    const removida = await TarefaModel.deletar(id);
+    if (!removida) {
         throw new Error('Tarefa não encontrada');
     }
-    return true; 
-}
+    return true;
+};

@@ -1,39 +1,51 @@
+import prisma from '@/lib/db';
 
-export let tarefas = [{id:1,titulo:'teste 1',concluida:true}]; // Banco de dados em memoria
-
-
+// Model agora usa Prisma Client para persistir no PostgreSQL.
+// Todos os metodos passaram a ser async (retornam Promise).
 export const TarefaModel = {
-    buscarTodas: () => { /* Retorne o array */
-        return tarefas;
-     },
-    buscarPorId: (id) => tarefas.find((t)=>t.id === Number(id)),
-    criar: (titulo) => {
-    // 1. Descubra o proximo ID disponivel
-        const proximoId = tarefas.length > 0
-        ?
-        Math.max(...tarefas.map(tarefa => tarefa.id)) + 1
-        :
-        1;
-        
-    // 2. Crie a nova tarefa (concluida: false) e adicione ao array
-        const tarefaComId = {id: proximoId, titulo: titulo, concluida: false};
+    buscarTodas: async () => {
+        return await prisma.tarefa.findMany({
+            orderBy: { id: 'asc' },
+        });
+    },
 
-        tarefas.push(tarefaComId);
-        return tarefaComId;
+    buscarPorId: async (id) => {
+        return await prisma.tarefa.findUnique({
+            where: { id: Number(id) },
+        });
     },
-    atualizar: (id, concluida) => {
-    // 1. Encontre a tarefa pelo ID
-        const tarefa = tarefas.find((t)=> t.id === Number(id));
-        
-        if (!tarefa){
-            return null;
+
+    criar: async (titulo) => {
+        return await prisma.tarefa.create({
+            data: {
+                titulo: titulo,
+                concluida: false,
+            },
+        });
+    },
+
+    atualizar: async (id, concluida) => {
+        // Se o id nao existir, o Prisma lanca P2025 - tratamos aqui
+        try {
+            return await prisma.tarefa.update({
+                where: { id: Number(id) },
+                data: { concluida: concluida },
+            });
+        } catch (err) {
+            if (err.code === 'P2025') return null;
+            throw err;
         }
-    // 2. Atualize o status e retorne a tarefa atualizada
-        tarefa.concluida = concluida;
-        return tarefa; 
     },
-    deletar: (id) => {
-    // 1. Encontre o indice da tarefa pelo ID e remova do array
-        tarefas = tarefas.filter(t => t.id !== Number(id));
-    }
+
+    deletar: async (id) => {
+        try {
+            await prisma.tarefa.delete({
+                where: { id: Number(id) },
+            });
+            return true;
+        } catch (err) {
+            if (err.code === 'P2025') return false;
+            throw err;
+        }
+    },
 };

@@ -1,9 +1,27 @@
-const comments = [{id: 1, name: "Usuário 1", body: "Comentário 1", status: "publicado"},
-               {id: 2, name: "Usuário 2", body: "Comentário 2", status: "arquivado"}
-    ];
+import prisma from '@/lib/db';
 
 export const CommentModel = {
-    buscarTodosComentarios : () => {
-        return comments;
-    }
-}
+    buscarTodosComentarios: async () => {
+        return await prisma.comment.findMany({
+            orderBy: { id: 'asc' },
+        });
+    },
+
+    buscarPorPost: async (postId) => {
+        return await prisma.comment.findMany({
+            where: { postId: Number(postId) },
+            orderBy: { id: 'asc' },
+        });
+    },
+
+    criar: async (novoComment) => {
+        return await prisma.comment.create({
+            data: {
+                name: novoComment.name,
+                body: novoComment.body,
+                status: novoComment.status ?? 'publicado',
+                postId: Number(novoComment.postId),
+            },
+        });
+    },
+};

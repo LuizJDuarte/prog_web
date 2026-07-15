@@ -1,25 +1,23 @@
 import { NextResponse } from "next/server";
-import { obterPostsPublicados, obterTodosPosts } from "@/controllers/postsController";
+import { obterTodosPosts, criarPost } from "@/controllers/postsController";
 
-// 1. READ (GET) - Lista todos os posts 
+// 1. READ (GET) - Lista todos os posts
 export async function GET() {
-    const todosOsPosts = PostModel.buscarTodos();
-    return NextResponse.json(todosOsPosts, {status:200});
+    try {
+        const todosOsPosts = await obterTodosPosts();
+        return NextResponse.json(todosOsPosts, { status: 200 });
+    } catch (err) {
+        return NextResponse.json({ erro: err.message }, { status: 500 });
+    }
 }
 
 // 2. CREATE (POST) - Cria um novo post
-export async function POST(request){
-    // Pega o JSON que veio no "corpo" da requisição do Front-end 
-    const corpoDaRequisicao = await request.json();
-
-    // Validação simples (Erro 400 se faltar o título)
-    if(!corpoDaRequisicao.titulo){
-        return NextResponse.json({ erro: "O título é obrigatório "}, {status:400})
+export async function POST(request) {
+    try {
+        const corpo = await request.json();
+        const postCriado = await criarPost(corpo);
+        return NextResponse.json(postCriado, { status: 201 });
+    } catch (err) {
+        return NextResponse.json({ erro: err.message }, { status: 400 });
     }
-
-    // Mandar o Model salvar
-    const postCriado = PostModel.criar(corpoDaRequisicao);
-
-    // Retorna 201 (Created)
-    return NextResponse.json(postCriado, {status:201})
 }

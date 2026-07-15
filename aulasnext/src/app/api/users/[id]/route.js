@@ -1,25 +1,23 @@
 import { NextResponse } from "next/server";
-import { obterPostPorId, removerPost } from "@/controllers/postsController";
+import { obterUsuarioPorId, removerUsuario } from "@/controllers/userController";
 
-const statusDoErro = (err) => err.message === "Post não encontrado" ? 404 : 400;
+const statusDoErro = (err) => err.message === "Usuário não encontrado" ? 404 : 400;
 
-// Buscar apenas UM post (com seus comentários)
 export async function GET(request, { params }) {
     try {
         const { id } = await params;
-        const post = await obterPostPorId(id);
-        return NextResponse.json(post, { status: 200 });
+        const user = await obterUsuarioPorId(id);
+        return NextResponse.json(user, { status: 200 });
     } catch (err) {
         return NextResponse.json({ erro: err.message }, { status: statusDoErro(err) });
     }
 }
 
-// Deletar UM post
 export async function DELETE(request, { params }) {
     try {
         const { id } = await params;
-        await removerPost(id);
-        return NextResponse.json({ mensagem: "Post deletado com sucesso!" }, { status: 200 });
+        await removerUsuario(id);
+        return NextResponse.json({ mensagem: "Usuário removido com sucesso!" }, { status: 200 });
     } catch (err) {
         return NextResponse.json({ erro: err.message }, { status: statusDoErro(err) });
     }
